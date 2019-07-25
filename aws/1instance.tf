@@ -5,7 +5,6 @@ resource "aws_instance" "mongo" {
 	subnet_id = "${aws_subnet.default.id}"
 	vpc_security_group_ids = ["${aws_security_group.default.id}"]
 	associate_public_ip_address = true
-	private_ip = "${var.mongo_ip}"
 	key_name = "default-key-pair"
 	provisioner "remote-exec" {
 		connection {
