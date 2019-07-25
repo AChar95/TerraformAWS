@@ -14,8 +14,12 @@ resource "aws_instance" "default" {
 			private_key = "${file("~/.ssh/id_rsa")}"
 		}
 		inline = [
-			"echo hi",
-			"hostname"
+			"sudo apt update",
+			"sudo apt install -y docker.io",
+			"sudo docker network create poolNetwork",
+			"sudo docker run -d -p 27017:27017 --name mongo --network poolNetwork mongo:latest",
+			"sudo docker run -d -p 8080:8080 --name api --network poolNetwork achar95/api:latest",
+			"sudo docker run -d -p 80:80 --name ui --network poolNetwork achar95/ui:latest"
 		]
 	}
 }
